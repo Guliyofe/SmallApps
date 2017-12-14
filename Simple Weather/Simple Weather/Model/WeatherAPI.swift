@@ -15,7 +15,7 @@ class WeatherAPI
 {
     let WEATHER_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
-    let APP_ID = "928b82bb8af713b27d231e6e0d50aa10"
+    let APP_ID = ""
     
     static let sharedInstance = WeatherAPI()
     private init() {}

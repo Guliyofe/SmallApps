@@ -23,6 +23,7 @@
 		09D3BD581FCF4D7E004FC753 /* FiveDayForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D3BD571FCF4D7E004FC753 /* FiveDayForecastViewController.swift */; };
 		09D3BD5A1FCF5F22004FC753 /* Weather.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09D3BD591FCF5F22004FC753 /* Weather.storyboard */; };
 		09D430BF1FD54E5000F80DE3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D430BE1FD54E5000F80DE3 /* WeatherViewController.swift */; };
+		09EDBD5320440964007FBC8D /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EDBD5220440964007FBC8D /* keys.plist */; };
 		6BAF4946FA441A991289BCDE /* Pods_Simple_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24F7B3C464A55BDDDBBE7651 /* Pods_Simple_Weather.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		09D3BD571FCF4D7E004FC753 /* FiveDayForecastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDayForecastViewController.swift; sourceTree = "<group>"; };
 		09D3BD591FCF5F22004FC753 /* Weather.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Weather.storyboard; sourceTree = "<group>"; };
 		09D430BE1FD54E5000F80DE3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		09EDBD5220440964007FBC8D /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		24F7B3C464A55BDDDBBE7651 /* Pods_Simple_Weather.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple_Weather.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		313DF0560056CB0038AA9DCE /* Pods-Simple Weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple Weather.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simple Weather/Pods-Simple Weather.debug.xcconfig"; sourceTree = "<group>"; };
 		857D851722983DD5C6CE052B /* Pods-Simple Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple Weather.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simple Weather/Pods-Simple Weather.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				094917321FCF3A6900064F59 /* Assets.xcassets */,
 				094917371FCF3A6900064F59 /* Info.plist */,
 				0924242E1FD592A70016604E /* city.list.json */,
+				09EDBD5220440964007FBC8D /* keys.plist */,
 			);
 			path = "Simple Weather";
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09EDBD5320440964007FBC8D /* keys.plist in Resources */,
 				09D3BD521FCF3D7D004FC753 /* WeatherCell.xib in Resources */,
 				09D3BD5A1FCF5F22004FC753 /* Weather.storyboard in Resources */,
 				094917361FCF3A6900064F59 /* LaunchScreen.storyboard in Resources */,
@@ -439,7 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4U3QA48G3;
 				INFOPLIST_FILE = "Simple Weather/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raclettecorp.Simple-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,7 +460,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J4U3QA48G3;
 				INFOPLIST_FILE = "Simple Weather/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raclettecorp.Simple-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";

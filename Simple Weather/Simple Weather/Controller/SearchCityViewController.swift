@@ -86,7 +86,10 @@ class SearchCityViewController : UITableViewController
     func initSearchController()
     {
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
+        if #available(iOS 9.1, *)
+        {
+            searchController.obscuresBackgroundDuringPresentation = false
+        }
         searchController.searchBar.placeholder = "Search City"
         if #available(iOS 11.0, *)
         {

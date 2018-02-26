@@ -20,12 +20,24 @@ class CustomWeatherCell : UITableViewCell
         super.awakeFromNib()
     }
     
+    private func putGradientLayer()
+    {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.frame
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.colors = [UIColor.lightGray.cgColor, UIColor.gray.cgColor]
+        
+        self.contentView.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     func setup(date: Date, temperature: Double, iconURL: String)
     {
         let dateFormatter = DateFormatter()
         
-        dateFormatter.dateFormat = "EEEE dd MMMM HH:mm"
-        dateLabel.text = dateFormatter.string(from: date)
+        putGradientLayer()
+        dateFormatter.dateFormat = "EEEE dd MMMM / H"
+        dateLabel.text = dateFormatter.string(from: date) + " h"
         temperatureLabel.text = String(Int(temperature - 273.15))  + "°C"
         weatherImageView.loadImageFromUrl(url: iconURL)
     }

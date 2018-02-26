@@ -10,23 +10,32 @@ import Foundation
 import CoreLocation
 import SwiftyJSON
 
-class City : NSObject, NSCoding
+enum RequestType
 {
-    var id: String!
-    var name: String!
-    var country: String!
-    var latitude: Double!
-    var longitude: Double!
+    case Weather
+    case Forecast
+}
+
+class City : NSObject, NSCoding, NSCopying
+{
+    var id: String = ""
+    var name: String = ""
+    var country: String = ""
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     
-    enum RequestType
-    {
-        case Weather
-        case Forecast
-    }
-    
-    override init()
+    required override init()
     {
         super.init()
+    }
+    
+    required init(_ model: City)
+    {
+        self.id = model.id
+        self.name = model.name
+        self.country = model.country
+        self.latitude = model.latitude
+        self.longitude = model.longitude
     }
     
     init(id: String, name: String, country: String, latitude: Double, longitude: Double)
@@ -59,14 +68,6 @@ class City : NSObject, NSCoding
                 longitude = json["city"]["coord"]["lon"].doubleValue
             }
         }
-        else
-        {
-            id = ""
-            name = ""
-            country = ""
-            latitude = 0.0
-            longitude = 0.0
-        }
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -74,9 +75,14 @@ class City : NSObject, NSCoding
         id = aDecoder.decodeObject(forKey: "id") as! String
         name = aDecoder.decodeObject(forKey: "name") as! String
         country = aDecoder.decodeObject(forKey: "country") as! String
-        latitude = aDecoder.decodeObject(forKey: "latitude") as! Double
-        longitude = aDecoder.decodeObject(forKey: "longitude") as! Double
+        latitude = aDecoder.decodeDouble(forKey: "latitude")
+        longitude = aDecoder.decodeDouble(forKey: "longitude")
         super.init()
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any
+    {
+        return type(of:self).init(self)
     }
     
     func encode(with aCoder: NSCoder)
@@ -86,7 +92,6 @@ class City : NSObject, NSCoding
         aCoder.encode(country, forKey: "country")
         aCoder.encode(latitude, forKey: "latitude")
         aCoder.encode(longitude, forKey: "longitude")
-
     }
     
 }

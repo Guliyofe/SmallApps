@@ -58,6 +58,21 @@ class SearchMapViewController : UIViewController, UIGestureRecognizerDelegate
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool
+    {
+        if let id = identifier
+        {
+            if (id == "goToWeather")
+            {
+                if (weather == nil)
+                {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
     //MARK: - Init Methods
     
     func initNavBar()
@@ -94,24 +109,11 @@ class SearchMapViewController : UIViewController, UIGestureRecognizerDelegate
     {
         let annotation = MKPointAnnotation()
         let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-        let location = CLLocation(latitude: city.latitude, longitude: city.longitude)
         
         annotation.coordinate = CLLocationCoordinate2D(latitude: city.latitude, longitude: city.longitude)
         annotation.title = city.name
         cityAnnotation = pinAnnotationView.annotation
         mapView.addAnnotation(pinAnnotationView.annotation!)
-        centerMapOnLocation(location: location)
-    }
-    
-    func centerMapOnLocation(location: CLLocation)
-    {
-        var region = MKCoordinateRegion()
-        
-        region.center.latitude = location.coordinate.latitude;
-        region.center.longitude = location.coordinate.longitude;
-        region.span.latitudeDelta = 1;
-        region.span.longitudeDelta = 1;
-        mapView.setRegion(region, animated: true)
     }
     
     func updateWeatherData(json: JSON)
@@ -132,7 +134,10 @@ class SearchMapViewController : UIViewController, UIGestureRecognizerDelegate
         let touchMapCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         
         mapView.removeOverlays(mapView.overlays)
-        mapView.removeAnnotation(cityAnnotation)
+        if (cityAnnotation != nil)
+        {
+            mapView.removeAnnotation(cityAnnotation)
+        }
         WeatherAPI.sharedInstance.getWeather(fromLocation: touchMapCoordinate) {
             weatherJSON, error in
             if (weatherJSON != nil)

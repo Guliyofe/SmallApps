@@ -24,6 +24,7 @@ class WeatherViewController : UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initGradientLayer()
         initTableView()
         initNavBar()
     }
@@ -41,10 +42,10 @@ class WeatherViewController : UITableViewController
         {
             let dateFormatter = DateFormatter()
             
-            dateFormatter.dateFormat = "EEEE dd MMMM HH:mm"
+            dateFormatter.dateFormat = "EEEE dd MMMM / HH"
             cityLabel.text = weather.city
             weatherImageView.loadImageFromUrl(url: weather.weatherIconURL)
-            dateLabel.text = dateFormatter.string(from: weather.date)
+            dateLabel.text = dateFormatter.string(from: weather.date) + " h"
             temperatureLabel.text = String(Int(weather.temperature - 273.15))  + "°C"
             titleLabel.text = weather.weatherTitle
             descriptionLabel.text = weather.weatherDescription.firstUppercased
@@ -52,5 +53,26 @@ class WeatherViewController : UITableViewController
             humidityLabel.text = String(weather.humidity) + "%"
             windLabel.text = String(Int(weather.speedWind * 3.6)) + " km/h"
         }
+    }
+    
+    func initGradientLayer()
+    {
+        let gradientLayer = CAGradientLayer()
+        let bgView = UIView.init(frame: self.tableView.frame)
+        
+        gradientLayer.frame = bgView.frame
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.lightGray.cgColor]
+        bgView.layer.insertSublayer(gradientLayer, at: 0)
+        self.tableView.backgroundView = bgView
+    }
+    
+    //MARK: - Delegate Methods
+    //MARK: -- TableView Delegate
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath)
+    {
+        cell.backgroundColor = UIColor.clear
     }
 }

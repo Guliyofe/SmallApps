@@ -15,10 +15,31 @@ class WeatherAPI
 {
     let WEATHER_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
     let WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
-    let APP_ID = "928b82bb8af713b27d231e6e0d50aa10"
+    var APP_ID = ""
     
     static let sharedInstance = WeatherAPI()
-    private init() {}
+    private init()
+    {
+        if let path = Bundle.main.path(forResource: "keys", ofType: "plist")
+        {
+            guard let dict = NSDictionary(contentsOfFile: path) else {
+                print("Error when converting keys.plist to NSDictionary")
+                return
+            }
+            if let OWMAppId = dict["OWMAppID"] as? String
+            {
+                APP_ID = OWMAppId
+            }
+            else
+            {
+                print("Key OWMAppID is missing")
+            }
+        }
+        else
+        {
+            print("keys.plist is missing")
+        }
+    }
     
     func getWeather(fromLocation location: CLLocationCoordinate2D, completion: @escaping (JSON?, Error?) -> Void)
     {

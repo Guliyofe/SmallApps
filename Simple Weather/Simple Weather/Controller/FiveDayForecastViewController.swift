@@ -26,6 +26,8 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
         super.viewWillAppear(true)
         
         self.title = currentCity.name
+        initGradientLayer()
+        initRefreshControl()
     }
     override func viewDidLoad()
     {
@@ -78,6 +80,29 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
         refreshControl?.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
     }
     
+    func initGradientLayer()
+    {
+        let gradientLayer = CAGradientLayer()
+        let bgView = UIView.init(frame: self.tableView.frame)
+        
+        gradientLayer.frame = bgView.frame
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        gradientLayer.colors = [UIColor.lightGray.cgColor, UIColor.gray.cgColor]
+        bgView.layer.insertSublayer(gradientLayer, at: 0)
+        self.tableView.backgroundView = bgView
+    }
+    
+    func initRefreshControl()
+    {
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        if let refreshCtrl = refreshControl
+        {
+            refreshCtrl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: attributes)
+        }
+    }
+    
     //MARK: - Basic Methods
     
     func showError(error: Error)
@@ -92,6 +117,32 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
         alert.addAction(action)
     }
     
+    func saveWeatherList()
+    {
+        let defaults = UserDefaults.standard
+        let offlineWeather = [currentCity : weatherList]
+        
+        defaults.set(NSKeyedArchiver.archivedData(withRootObject: offlineWeather) as Data, forKey: "offlineWeather")
+    }
+    
+    func loadWeatherList()
+    {
+        let defaults = UserDefaults.standard
+        
+        if let decoded  = defaults.object(forKey: "offlineWeather") as? Data
+        {
+            guard let offlineWeather = NSKeyedUnarchiver.unarchiveObject(with: decoded) as? [City : [Weather]] else {
+                print("No offline weather!")
+                return
+            }
+            
+            currentCity = (offlineWeather.first?.key)!
+            self.title = currentCity.name
+            weatherList = (offlineWeather.first?.value)!
+            tableView.reloadData()
+        }
+    }
+    
     func updateForecast(withCity city: City)
     {
         currentCity = city
@@ -104,6 +155,7 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
             else
             {
                 self.showError(error: error!)
+                self.loadWeatherList()
             }
         }
     }
@@ -121,6 +173,7 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
         {
             refreshControl?.endRefreshing()
         }
+        saveWeatherList()
         tableView.reloadData()
     }
     
@@ -204,6 +257,7 @@ class FiveDayForecastViewController : UITableViewController, CLLocationManagerDe
                 else
                 {
                     self.showError(error: error!)
+                    self.loadWeatherList()
                 }
             }
         }
